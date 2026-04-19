@@ -11,15 +11,14 @@ services:
       - QUI_PORT=${QUI_PORT:-7476}
     volumes:
       - ${CONFIG_DIR:-config}:/config
-      #- ${DOWNLOADS_DIR:-downloads}:/downloads #optional dowlaoadSSSS !!! da aggiustare
       - ${WATCH_FOLDER:-watch}:/watch #optional
       - ${INCOMPLETE_FOLDER:-incomplete}:/incomplete
       - /volume2/media/download:/media01/download
       - /volume3/media02/download:/media02/download
       - /volume4/media03/download:/media03/download
-    #networks:
-    #  macvlan-ovs_eth0:
-    #    ipv4_address: 10.0.50.56  
+    networks:
+      macvlan-ovs_eth0:
+        ipv4_address: 10.0.50.56  
     ports:
       - ${WEBUI_PORT}:8080
       - ${TORRENTING_PORT}:6881
