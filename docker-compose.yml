@@ -1,7 +1,6 @@
 services:
   qbittorrent:
-    image: braingremlin/qbittorent-qui:latest
-    #image: lscr.io/linuxserver/qbittorrent:latest
+    image: braingremlin/qbittorrent-qui:latest
     container_name: qbittorrent
     environment:
       - PUID=${PUID:-1000}

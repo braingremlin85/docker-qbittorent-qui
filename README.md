@@ -1,3 +1,2 @@
-# docker-sonarr
-linuxserver's sonarr with added python support (and transmission-rpc module) for running custom scripts
-
+# docker-qbittorrent-qui
+linuxserver's [qbittorent](https://github.com/linuxserver/docker-qbittorrent) with added [qui web gui](https://github.com/autobrr/qui)
