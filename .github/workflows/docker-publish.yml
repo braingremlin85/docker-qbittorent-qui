@@ -21,7 +21,7 @@ env:
   # github.repository as <account>/<repo>
   #IMAGE_NAME: ${{ github.repository }}
   REGISTRY_IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/qbittorrent-qui
-  RADARR_VERSION: 5.1.4-r3
+  QBITTORENT_VERSION: 5.2.3
 
 jobs:
   build:
@@ -106,7 +106,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY_IMAGE }}
           tags: |
-            type=raw,value=${{ env.RADARR_VERSION }}
+            type=raw,value=${{ env.QBITTORENT_VERSION }}
             #type=ref,event=branch
             type=ref,event=pr
             type=semver,pattern={{version}}

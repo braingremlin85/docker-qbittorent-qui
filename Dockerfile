@@ -13,8 +13,8 @@ ARG ARCH=x86_64
 FROM build-${TARGETARCH} AS build
 
 #ARG S6_OVERLAY_VERSION="3.2.1.0"
-#ARG INCLUDES_BASEURL="https://raw.githubusercontent.com/braingremlin85/docker-apache2-php-fpm/master/includes/"
-ARG INCLUDES_BASEURL="includes/"
+ARG INCLUDES_BASEURL="https://raw.githubusercontent.com/braingremlin85/docker-qbittorent-qui/master/includes/"
+#ARG INCLUDES_BASEURL="includes/" # use this for local build
 
 
 RUN wget $(curl -s https://api.github.com/repos/autobrr/qui/releases/latest | grep browser_download_url | grep linux_x86_64 | cut -d\" -f4)
@@ -29,3 +29,7 @@ ADD ${INCLUDES_BASEURL}/svc-qui/svc-qui-run /etc/s6-overlay/s6-rc.d/svc-qui/run
 RUN chmod +x /etc/s6-overlay/s6-rc.d/svc-qui/run
 RUN	mkdir /etc/s6-overlay/s6-rc.d/svc-qui/dependencies.d && touch /etc/s6-overlay/s6-rc.d/svc-qui/dependencies.d/svc-qbittorrent
 RUN	touch /etc/s6-overlay/s6-rc.d/user/contents.d/svc-qui
+
+
+EXPOSE 8080/tcp
+EXPOSE 7476/tcp

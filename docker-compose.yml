@@ -1,7 +1,7 @@
 services:
   qbittorrent:
     image: braingremlin/qbittorrent-qui:latest
-    container_name: qbittorrent
+    container_name: qbittorrent-qui
     environment:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
@@ -9,6 +9,7 @@ services:
       - WEBUI_PORT=${WEBUI_PORT:-8080}
       - TORRENTING_PORT=${TORRENTING_PORT:-6881}
       - QUI_PORT=${QUI_PORT:-7476}
+    stop_grace_period: 15m
     volumes:
       - ${CONFIG_DIR:-config}:/config
       - ${WATCH_FOLDER:-watch}:/watch #optional
@@ -16,20 +17,23 @@ services:
       - /volume2/media/download:/media01/download
       - /volume3/media02/download:/media02/download
       - /volume4/media03/download:/media03/download
-    networks:
-      macvlan-ovs_eth0:
-        ipv4_address: 10.0.50.56  
     ports:
       - ${WEBUI_PORT}:8080
       - ${TORRENTING_PORT}:6881
       - ${TORRENTING_PORT}:6881/udp
       - ${QUI_PORT}:7476
     restart: unless-stopped
+    networks:
+      media-bridge:
+    security_opt:
+      - no-new-privileges:true
 
 networks:
-  macvlan-ovs_eth0:
-    external: true
+  media-bridge:
+    driver: bridge
+    name: media-bridge  
 
 volumes:
   config:
-  downloads:
+  incomplete:
+  watch:
