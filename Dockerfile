@@ -18,7 +18,8 @@ ARG INCLUDES_BASEURL="https://raw.githubusercontent.com/braingremlin85/docker-qb
 
 RUN apk update && apk upgrade
 
-RUN wget -O qui.tar.gz "$(curl -s https://api.github.com/repos/autobrr/qui/releases/latest | grep browser_download_url | grep "linux_${ARCH}" | cut -d\" -f4)" \
+RUN DOWNLOAD_URL=$(curl -s https://api.github.com/repos/autobrr/qui/releases/latest | grep browser_download_url | grep "linux_${ARCH}" | cut -d\" -f4) \
+    && wget -O qui.tar.gz "${DOWNLOAD_URL}" \
     && tar -C /usr/bin -xzf qui.tar.gz \
     && chmod +x /usr/bin/qui \
     && rm qui.tar.gz
