@@ -1,5 +1,5 @@
 services:
-  qbittorrent:
+  qbittorrent-qui:
     image: braingremlin/qbittorrent-qui:latest
     container_name: qbittorrent-qui
     environment:
@@ -13,14 +13,14 @@ services:
     volumes:
       - ${CONFIG_DIR:-config}:/config
       - ${WATCH_FOLDER:-watch}:/watch #optional
-      - ${INCOMPLETE_FOLDER:-incomplete}:/incomplete
+      - ${INCOMPLETE_FOLDER:-incomplete}:/incomplete # needed ???
       - /volume2/media/download:/media01/download
       - /volume3/media02/download:/media02/download
       - /volume4/media03/download:/media03/download
     ports:
       - ${WEBUI_PORT}:8080
-      - ${TORRENTING_PORT}:6881
-      - ${TORRENTING_PORT}:6881/udp
+      - ${TORRENTING_PORT}:${TORRENTING_PORT}
+      - ${TORRENTING_PORT}:${TORRENTING_PORT}/udp
       - ${QUI_PORT}:7476
     restart: unless-stopped
     networks:

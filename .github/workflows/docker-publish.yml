@@ -21,7 +21,7 @@ env:
   # github.repository as <account>/<repo>
   #IMAGE_NAME: ${{ github.repository }}
   REGISTRY_IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/qbittorrent-qui
-  QBITTORENT_VERSION: 5.2.3
+  QBITTORRENT-QUI_VERSION: 5.2.3-1.26.0
 
 jobs:
   build:
@@ -33,6 +33,9 @@ jobs:
           - linux/amd64
           - linux/arm64
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
       - name: Prepare
         run: |
           platform=${{ matrix.platform }}
@@ -63,6 +66,8 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ env.REGISTRY_IMAGE }}
+          cache-from: type=gha,scope=${{ matrix.platform }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.platform }}          
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
@@ -106,7 +111,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY_IMAGE }}
           tags: |
-            type=raw,value=${{ env.QBITTORENT_VERSION }}
+            type=raw,value=${{ env.QBITTORRENT-QUI_VERSION }}
             #type=ref,event=branch
             type=ref,event=pr
             type=semver,pattern={{version}}
